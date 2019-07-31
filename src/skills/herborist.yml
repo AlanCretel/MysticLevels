@@ -1,0 +1,119 @@
+CONFIG:
+  max_level: 100
+  give_xp: true
+  give_money: true
+  active: true
+EVENTS:
+  BREAK:
+    POPPY:
+      xp: 0
+      points: 1
+      money: 0.1
+    DANDELION:
+      xp: 0
+      points: 1
+      money: 0.1
+    BLUE_ORCHID:
+      xp: 0
+      points: 1
+      money: 0.1
+    ALLIUM:
+      xp: 0
+      points: 1
+      money: 0.1
+    AZURE_BLUET:
+      xp: 0
+      points: 1
+      money: 0.1
+    RED_TULIP:
+      xp: 0
+      points: 1
+      money: 0.1
+    ORANGE_TULIP:
+      xp: 0
+      points: 1
+      money: 0.1
+    WHITE_TULIP:
+      xp: 0
+      points: 1
+      money: 0.1
+    PINK_TULIP:
+      xp: 0
+      points: 1
+      money: 0.1
+    OXEYE_DAISY:
+      xp: 0
+      points: 1
+      money: 0.1
+    CORNFLOWER:
+      xp: 0
+      points: 1
+      money: 0.1
+    LILY_OF_THE_VALLEY:
+      xp: 0
+      points: 1
+      money: 0.1
+    BROWN_MUSHROOM:
+      xp: 0
+      points: 1
+      money: 0.1
+    RED_MUSHROOM:
+      xp: 0
+      points: 1
+      money: 0.1
+    VINE:
+      xp: 0
+      points: 1
+      money: 0.1
+    LILY_PAD:
+      xp: 0
+      points: 1
+      money: 0.1
+    SUNFLOWER:
+      xp: 0
+      points: 1
+      money: 0.1
+    LILAC:
+      xp: 0
+      points: 1
+      money: 0.1
+    ROSE_BUSH:
+      xp: 0
+      points: 1
+      money: 0.1
+    PEONY:
+      xp: 0
+      points: 1
+      money: 0.1
+    TALL_GRASS:
+      xp: 2
+      points: 1
+      money: 0.2
+    LARGE_FERN:
+      xp: 2
+      points: 1
+      money: 0.2
+    FERN:
+      xp: 0
+      points: 1
+      money: 0.1
+    DEAD_BUSH:
+      xp: 0
+      points: 1
+      money: 0.1
+    SEAGRASS:
+      xp: 0
+      points: 1
+      money: 0.1
+    SEA_PICKLE:
+      xp: 0
+      points: 1
+      money: 0.1
+    CACTUS:
+      xp: 0
+      points: 2
+      money: 0.2
+    GRASS:
+      xp: 0
+      points: 1
+      money: 0.1

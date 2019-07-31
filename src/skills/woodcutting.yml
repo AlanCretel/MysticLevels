@@ -1,0 +1,31 @@
+CONFIG:
+  max_level: 100
+  give_xp: true
+  give_money: true
+  active: true
+EVENTS:
+  BREAK:
+    SPRUCE_LOG:
+      xp: 0
+      points: 1
+      money: 1
+    OAK_LOG:
+      xp: 0
+      points: 1
+      money: 1
+    DARK_OAK_LOG:
+      xp: 0
+      points: 1
+      money: 1
+    ACACIA_LOG:
+      xp: 0
+      points: 1
+      money: 1
+    BIRCH_LOG:
+      xp: 0
+      points: 1
+      money: 1
+    JUNGLE_LOG:
+      xp: 0
+      points: 1
+      money: 1

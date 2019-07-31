@@ -1,0 +1,44 @@
+CONFIG:
+  max_level: 100
+  give_xp: true
+  give_money: true
+  active: true
+EVENTS:
+  HARVEST:
+    WHEAT:
+      xp: 1
+      points: 1
+      money: 1
+    CARROTS:
+      xp: 1
+      points: 1
+      money: 1
+    POTATOES:
+      xp: 1
+      points: 1
+      money: 1
+    BEETROOTS:
+      xp: 1
+      points: 1
+      money: 1
+    BAMBOO:
+      xp: 1
+      points: 2
+      money: 1
+    NETHER_WART:
+      xp: 5
+      points: 5
+      money: 5
+  BREAK:
+    PUMPKIN:
+      xp: 5
+      points: 10
+      money: 5
+    MELON:
+      xp: 5
+      points: 10
+      money: 5
+    SUGAR_CANE:
+      xp: 2
+      points: 2
+      money: 2

@@ -1,0 +1,54 @@
+#This is an exemple of making a new skill... You don't need to reload plugin or server, changes are automatically applied.
+CONFIG:
+  #Set if skill is active. If set to false, players will not can view and get points for this skill.
+  active: false
+  #Set the maximum level for this skill. Not yet implemented. See change logs :)
+  max_level: 100
+  #Define if this skill will give xp or money. Not need to set 0 to all events. Money requires the plugin Vault.
+  give_xp: true
+  give_money: true
+EVENTS:
+  #When a player harvest a plant that have age like WHEAT, BAMBOO...
+  HARVEST:
+    #The block or item material name. refer to this page for valid names:
+    #https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+    WHEAT:
+      #Experience that be dropped when this block is harvested. Will vary depending on player's skill level.
+      xp: 1
+      #Skill points player will receive.
+      points: 1
+      #Money that will be given when this block is harvested. Will vary depending on player's skill level.
+      money: 1
+  #When a player breaks a block. Event is farming safe, when a player places a block, data will be added to block to prevent farming.
+  #But when server restarts, the data saved in the block is removed, then take care of player farms. Use at your own risk.
+  BREAK:
+    STONE:
+      xp: 0
+      points: 1
+      money: 0.1
+  #When a player places a block. I recommend to don't give experience or money. Players can break and place block to farm.
+  PLACE:
+    SNOW:
+      xp: 1
+      points: 1
+      money: 0
+  #When an item is crafted. Take care about craftable or uncraftable items. Ex: Mineral blocks, ingots or nuggets.
+  #When craft results in more than one item, rewards will be multiplied by amount crafted. Ex: iron ingots by uncrafting an iron block.
+  #Doesn't works with shift-crafting. Due to minecraft's code. This error is known and Spigot devs works on.
+  #https://hub.spigotmc.org/jira/browse/SPIGOT-1009
+  CRAFT:
+    LADDER:
+      xp: 2
+      points: 1
+      money: 10
+  #When a player kills an entity. Use PLAYER to trigger a player kill. For more entity type names, see:
+  #https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html
+  KILL:
+    ZOMBIE:
+      xp: 1
+      points: 10
+      money: 5
+    PLAYER:
+      xp: 1
+      points: 20
+      money: 10

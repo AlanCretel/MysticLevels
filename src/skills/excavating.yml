@@ -1,0 +1,51 @@
+CONFIG:
+  max_level: 100
+  give_xp: true
+  give_money: true
+  active: true
+EVENTS:
+  BREAK:
+    STONE:
+      xp: 0
+      points: 1
+      money: 0.1
+    DIRT:
+      xp: 0
+      points: 1
+      money: 0
+    GRASS_BLOCK:
+      xp: 0
+      points: 1
+      money: 0
+    SAND:
+      xp: 0
+      points: 1
+      money: 0.2
+    GRAVEL:
+      xp: 0
+      points: 2
+      money: 0.2
+    CLAY:
+      xp: 1
+      points: 5
+      money: 1
+    SNOW:
+      xp: 0
+      points: 1
+      money: 0
+    ICE:
+      xp: 0
+      points: 1
+      money: 0
+    ANDESITE:
+      xp: 0
+      points: 2
+      money: 0
+    GRANITE:
+      xp: 0
+      points: 2
+      money: 0
+    DIORITE:
+      xp: 0
+      points: 2
+      money: 0
