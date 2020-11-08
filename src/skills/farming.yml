@@ -1,5 +1,7 @@
 CONFIG:
-  max_level: 100
+  max_level:
+    enabled: false
+    level: 100
   give_xp: true
   give_money: true
   active: true

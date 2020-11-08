@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="MysticLevels">
+    <output-path>$USER_HOME$/OneDrive/Documents/DEVELOPPEMENT/MINECRAFT/PLUGINS/BUILDS/1.14</output-path>
+    <root id="archive" name="MysticLevels.jar">
+      <element id="module-output" name="MysticLevels" />
+    </root>
+  </artifact>
+</component>

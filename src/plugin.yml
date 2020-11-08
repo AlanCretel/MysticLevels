@@ -3,7 +3,7 @@ author: Choco70
 main: fr.choco70.mysticlevels.MysticLevels
 version: 1.0.0
 api-version: "1.14"
-softdepend: [Vault]
+softdepend: [Vault, PlaceholderAPI]
 commands:
   skills:
     description: View all skills commands.

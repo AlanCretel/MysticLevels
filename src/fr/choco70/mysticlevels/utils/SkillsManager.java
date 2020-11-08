@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class SkillsManager{
 
-    private MysticLevels plugin = MysticLevels.getPlugin(MysticLevels.class);
-    private PlayersManager playersManager = plugin.getPlayersManager();
+    private static MysticLevels plugin = MysticLevels.getPlugin(MysticLevels.class);
+    private static PlayersManager playersManager = plugin.getPlayersManager();
 
     public void createSkillFile(String skillName){
         File pluginDataFolder = plugin.getDataFolder();
@@ -28,16 +28,16 @@ public class SkillsManager{
         }
     }
 
-    public File getSkillFile(String skillName){
+    public static File getSkillFile(String skillName){
         File skillsDataFolder = new File(plugin.getDataFolder() + File.separator + "skills" + File.separator);
         return new File(skillsDataFolder, skillName +".yml");
     }
 
-    public FileConfiguration getSkillConfig(String skillName){
+    public static FileConfiguration getSkillConfig(String skillName){
         return YamlConfiguration.loadConfiguration(getSkillFile(skillName));
     }
 
-    public ArrayList<String> getSkills(){
+    public static ArrayList<String> getSkills(){
         File pluginDataFolder = plugin.getDataFolder();
         if(!pluginDataFolder.exists()){
             pluginDataFolder.mkdir();
@@ -80,15 +80,15 @@ public class SkillsManager{
         setPlayerSkillPoints(player, skill.toUpperCase(), playerPoints);
     }
 
-    public Integer getSkillPoints(Player player, String skill){
+    public static Integer getSkillPoints(Player player, String skill){
         return playersManager.getPlayerConfig(player).getInt(skill.toUpperCase() + ".points", 0);
     }
 
-    public Integer getSkillLevel(Player player, String skill){
+    public static Integer getSkillLevel(Player player, String skill){
         return playersManager.getPlayerConfig(player).getInt(skill.toUpperCase() + ".level", 0);
     }
 
-    public Integer getXpToLevelUp(Player player, String skill){
+    public static Integer getXpToLevelUp(Player player, String skill){
         return (getSkillLevel(player, skill.toUpperCase()) * 10 + 10);
     }
 
@@ -98,23 +98,22 @@ public class SkillsManager{
         playersManager.savePlayerConfig(playerConfig, player);
     }
 
-    public Integer getExperienceMultiplier(Player player, String skill){
+    public static Integer getExperienceMultiplier(Player player, String skill){
         return (1 + getSkillLevel(player, skill.toUpperCase())/10);
     }
 
-    public Integer getMoneyMultiplier(Player player, String skill){
+    public static Integer getMoneyMultiplier(Player player, String skill){
         return (1 + getSkillLevel(player, skill.toUpperCase())/10);
     }
 
     public boolean isSkill(String string){
         ArrayList<String> skills = getSkills();
-        boolean result = false;
         for (String skill : skills) {
-            if(string.equalsIgnoreCase(skill)){
-                result = true;
+            if (string.equalsIgnoreCase(skill)) {
+                return true;
             }
         }
-        return result;
+        return false;
     }
 
     public String getSkillByName(String name){
@@ -134,8 +133,7 @@ public class SkillsManager{
     }
 
     public boolean isGiveXP(String skillName){
-        FileConfiguration pluginConfig = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "config.yml"));
-        if(!pluginConfig.getBoolean("SETTINGS.give_xp", true)){
+        if(!doesGiveXP()){
             return false;
         }
         else{
@@ -144,8 +142,7 @@ public class SkillsManager{
     }
 
     public boolean isGiveMoney(String skillName){
-        FileConfiguration pluginConfig = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "config.yml"));
-        if(!pluginConfig.getBoolean("SETTINGS.give_money", false)){
+        if(!doesGiveMoney()){
             return false;
         }
         else{
@@ -178,7 +175,32 @@ public class SkillsManager{
         return pluginConfig.getBoolean("SETTINGS.give_xp");
     }
 
-    public int getMaxSkillLevel(String skillName){
-        return getSkillConfig(skillName).getInt("CONFIG.max_level", 100);
+    public static Integer getMaxSkillLevel(String skillName){
+        if(hasMaxLevel(skillName)){
+
+        }
+        return getSkillConfig(skillName).getInt("CONFIG.max_level.level", 100);
+    }
+
+    public static boolean hasMaxLevel(String skillName){
+        if(hasGlobalMaxLevel()){
+            return true;
+        }
+        return getSkillConfig(skillName).getBoolean("CONFIG.max_level.enabled", false);
+    }
+
+    public static boolean isGlobalMaxLevelActive(){
+        return plugin.getConfig().getBoolean("SETTINGS.global_max_level.active", true);
+    }
+
+    public static Integer getGlobalMaxLevel(){
+        return plugin.getConfig().getInt("SETTINGS.global_max_level.level", 100);
+    }
+
+    public static boolean hasGlobalMaxLevel(){
+        if(isGlobalMaxLevelActive()){
+            return plugin.getConfig().getBoolean("SETTINGS.global_max_level.enabled", false);
+        }
+        return false;
     }
 }

@@ -1,10 +1,18 @@
-#This is an exemple of making a new skill... You don't need to reload plugin or server, changes are automatically applied.
+#This is an example of making a new skill... You don't need to reload plugin or server, changes are automatically applied.
 CONFIG:
   #Set if skill is active. If set to false, players will not can view and get points for this skill.
   active: false
-  #Set the maximum level for this skill. Not yet implemented. See change logs :)
-  max_level: 100
-  #Define if this skill will give xp or money. Not need to set 0 to all events. Money requires the plugin Vault.
+  #Set the maximum level for this skill.
+  max_level:
+    #Set maximum level active for this skill.
+    #If maximum level is disabled in main config you can enable one here by enabling them.
+    #Else, if maximum level is active in the main config, the max level will be enabled even if you disabled it here.
+    enabled: false
+    #Define the maximum level for this skill.
+    #If global maximum level is enabled in config, the limit from the main config will be used.
+    level: 100
+  #Define if this skill will give xp or money then you don't have to set 0 to all events.
+  #Money requires the plugin Vault.
   give_xp: true
   give_money: true
 EVENTS:

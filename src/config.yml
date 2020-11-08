@@ -5,3 +5,8 @@ SETTINGS:
   give_xp: true
 #Does events gives money ? You can disable this per-skill too ;)
   give_money: false
+#Here you can enable the global maximum level that enable maximum level for skills and if there is a limit.
+  global_max_level:
+    active: true
+    enabled: false
+    level: 100

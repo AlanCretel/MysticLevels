@@ -17,6 +17,8 @@ public class MysticLevels extends JavaPlugin{
     private SkillsManager skillsManager;
     private ConfigManager configManager;
     private EconomyLink economyLink;
+    private PlaceHoldersManager placeHoldersManager;
+    private boolean placeholders = false;
 
     @Override
     public void onEnable(){
@@ -40,6 +42,9 @@ public class MysticLevels extends JavaPlugin{
 
         configManager.setDefaultSkills();
         configManager.copyDefaultConfigs();
+        if(placeholders){
+            placeHoldersManager.registerPlaceholders();
+        }
     }
 
     @Override
@@ -53,6 +58,10 @@ public class MysticLevels extends JavaPlugin{
         skillsManager = new SkillsManager();
         if(getServer().getPluginManager().isPluginEnabled("Vault")){
             economyLink = new EconomyLink();
+        }
+        if(getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")){
+            placeHoldersManager = new PlaceHoldersManager();
+            placeholders = true;
         }
     }
 

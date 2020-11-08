@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ConfigManager{
 
-    private MysticLevels plugin = MysticLevels.getPlugin(MysticLevels.class);
+    private final MysticLevels plugin = MysticLevels.getPlugin(MysticLevels.class);
     private ArrayList<String> defaultSkills = new ArrayList<>();
 
     public void setDefaultSkills() {

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Vault">
+    <CLASSES>
+      <root url="jar://D:/Développement/MINECRAFT/RESSOURCES/Plugins/Vault.jar!/" />
+      <root url="jar://D:/Développement/MINECRAFT/RESSOURCES/Plugins/PlaceholderAPI-2.10.6.jar!/" />
+      <root url="jar://D:/Développement/MINECRAFT/RESSOURCES/spigot-1.14.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/Développement/MINECRAFT/RESSOURCES/spigot-1.14.jar!/" />
+    </SOURCES>
+  </library>
+</component>
