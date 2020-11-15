@@ -56,7 +56,8 @@ public class MysticLevels extends JavaPlugin{
             economyLink = new EconomyLink();
         }
         if(getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")){
-            placeHoldersManager = new PlaceHoldersManager();
+            placeHoldersManager = new PlaceHoldersManager(this);
+            placeHoldersManager.register();
         }
     }
 
