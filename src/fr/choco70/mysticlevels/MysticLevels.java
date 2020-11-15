@@ -18,7 +18,6 @@ public class MysticLevels extends JavaPlugin{
     private ConfigManager configManager;
     private EconomyLink economyLink;
     private PlaceHoldersManager placeHoldersManager;
-    private boolean placeholders = false;
 
     @Override
     public void onEnable(){
@@ -42,9 +41,6 @@ public class MysticLevels extends JavaPlugin{
 
         configManager.setDefaultSkills();
         configManager.copyDefaultConfigs();
-        if(placeholders){
-            placeHoldersManager.registerPlaceholders();
-        }
     }
 
     @Override
@@ -61,7 +57,6 @@ public class MysticLevels extends JavaPlugin{
         }
         if(getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")){
             placeHoldersManager = new PlaceHoldersManager();
-            placeholders = true;
         }
     }
 
