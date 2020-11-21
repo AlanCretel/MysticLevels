@@ -21,7 +21,7 @@ public class EntityDamage implements Listener{
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent e){
-        if(e.getDamager() instanceof Player){
+        if(e.getDamager() instanceof Player && e.getEntity() instanceof Damageable){
             Damageable entity = (Damageable)e.getEntity();
             if(entity.getHealth() - e.getFinalDamage() <= 0){
                 String entityType = entity.getType().name();

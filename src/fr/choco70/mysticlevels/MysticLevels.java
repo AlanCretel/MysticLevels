@@ -18,12 +18,15 @@ public class MysticLevels extends JavaPlugin{
     private ConfigManager configManager;
     private EconomyLink economyLink;
     private PlaceHoldersManager placeHoldersManager;
+    private Metrics metrics;
 
     @Override
     public void onEnable(){
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "MysticLevels: Plugin enabled");
         FileConfiguration config = this.getConfig();
         config.options().copyDefaults(true);
+
+        metrics = new Metrics(this, 9471);
 
         try {
             config.save(this.getDataFolder() + File.separator + "config.yml");
