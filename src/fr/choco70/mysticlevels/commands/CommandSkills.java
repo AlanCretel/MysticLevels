@@ -1,7 +1,9 @@
 package fr.choco70.mysticlevels.commands;
 
+import com.sun.org.glassfish.gmbal.ParameterNames;
 import fr.choco70.mysticlevels.MysticLevels;
-import fr.choco70.mysticlevels.utils.SkillsManager;
+import fr.choco70.mysticlevels.managers.MessagesManager;
+import fr.choco70.mysticlevels.managers.SkillsManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,12 +14,13 @@ import java.util.ArrayList;
 
 public class CommandSkills implements CommandExecutor{
 
-    private MysticLevels plugin = MysticLevels.getPlugin(MysticLevels.class);
-    private SkillsManager skillsManager = plugin.getSkillsManager();
+    private final MysticLevels plugin = MysticLevels.getPlugin(MysticLevels.class);
+    private final SkillsManager skillsManager = plugin.getSkillsManager();
+    private final MessagesManager messagesManager = plugin.getMessagesManager();
+    private final String pluginHeader = plugin.getConfig().getString("SETTINGS.plugin_header", "§6[MysticLevels]§7");
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] arguments){
-        String pluginHeader = plugin.getConfig().getString("SETTINGS.plugin_header");
         if(arguments.length == 0){
             sendHelpInfos(sender);
         }
@@ -25,22 +28,21 @@ public class CommandSkills implements CommandExecutor{
             if(arguments.length == 1){
                 if(arguments[0].equalsIgnoreCase("list")){
                     if(skillsManager.getActiveSkills().size() == 0){
-                        sender.sendMessage(pluginHeader + "§4No skills present... report the issue to an administrator.");
+                        sender.sendMessage(formatMessage(messagesManager.getMessage("NO_SKILLS")));
                     }
                     else{
-                        sender.sendMessage(ChatColor.GOLD + "=========-["  + ChatColor.GRAY + "SKILLS" + ChatColor.GOLD + "]-=========");
+                        sender.sendMessage(formatMessage(messagesManager.getMessage("SKILLS_LIST_HEAD")));
                         ArrayList<String> skills = skillsManager.getActiveSkills();
-                        String skillPrefix = "§7  - ";
                         for (String skill : skills) {
-                            sender.sendMessage(skillPrefix + ChatColor.BLUE + skill.toUpperCase());
+                            sender.sendMessage(formatMessage(messagesManager.getMessage("SKILLS_LIST_SKILL"), skill));
                         }
-                        sender.sendMessage(ChatColor.GOLD + "===========================");
+                        sender.sendMessage(formatMessage(messagesManager.getMessage("SKILLS_LIST_FOOT")));
                     }
                 }
                 else if(arguments[0].equalsIgnoreCase("info")){
-                    sender.sendMessage(pluginHeader + "§fThey are §6" + skillsManager.getActiveSkills().size() + "§f skills active.");
-                    sender.sendMessage(pluginHeader + "§fMoney giving is set to §6" + skillsManager.doesGiveMoney() + "§f.");
-                    sender.sendMessage(pluginHeader + "§fExperience giving is set to §6" + skillsManager.doesGiveXP() + "§f.");
+                    sender.sendMessage(formatMessage(messagesManager.getMessage("INFO_NB_SKILLS")).replaceAll("%NB_OF_SKILLS%", "" + skillsManager.getActiveSkills().size()));
+                    sender.sendMessage(formatMessage(messagesManager.getMessage("INFO_MONEY_GIVING"), "", 0, 0, 0, 0, true, skillsManager.doesGiveMoney(), 0, 0));
+                    sender.sendMessage(formatMessage(messagesManager.getMessage("INFO_XP_GIVING"), "", 0, 0, 0, 0, skillsManager.doesGiveXP(), true, 0, 0));
                 }
                 else{
                     sendHelpInfos(sender);
@@ -53,20 +55,20 @@ public class CommandSkills implements CommandExecutor{
                         if(skillsManager.isSkill(arguments[1]) && skillsManager.isActiveSkill(arguments[1])){
                             String skill = skillsManager.getSkillByName(arguments[1]);
                             Integer points = skillsManager.getSkillPoints(player, skill);
-                            player.sendMessage(pluginHeader + "§7You have §6" + points + "§7 points in skill §b" + skill + "§7.");
+                            player.sendMessage(formatMessage(messagesManager.getMessage("POINTS_INFO"), skill, 0, points, skillsManager.getXpToLevelUp(player, skill), skillsManager.getMaxSkillLevel(skill), skillsManager.isGiveXP(skill), skillsManager.isGiveMoney(skill), skillsManager.getExperienceMultiplier(player, skill), skillsManager.getMoneyMultiplier(player, skill)));
                         }
                         else{
-                            player.sendMessage(pluginHeader + "§b" + arguments[1] + "§7 is not a valid skill.");
+                            player.sendMessage(formatMessage(messagesManager.getMessage("INVALID_SKILL"), arguments[1]));
                         }
                     }
                     else if(arguments[0].equalsIgnoreCase("level")){
                         if(skillsManager.isSkill(arguments[1]) && skillsManager.isActiveSkill(arguments[1])){
                             String skill = skillsManager.getSkillByName(arguments[1]);
                             Integer level = skillsManager.getSkillLevel(player, skill);
-                            player.sendMessage(pluginHeader + "§7You are level §6" + level + "§7 in skill §b" + skill + "§7.");
+                            player.sendMessage(formatMessage(messagesManager.getMessage("LEVEL_INFO"), skill, level, 0, skillsManager.getXpToLevelUp(player, skill), skillsManager.getMaxSkillLevel(skill), skillsManager.isGiveXP(skill), skillsManager.isGiveMoney(skill), skillsManager.getExperienceMultiplier(player, skill), skillsManager.getMoneyMultiplier(player, skill)));
                         }
                         else{
-                            player.sendMessage(pluginHeader + "§b" + arguments[1] + "§7 is not a valid skill.");
+                            player.sendMessage(formatMessage(messagesManager.getMessage("INVALID_SKILL"), arguments[1]));
                         }
                     }
                     else if(arguments[0].equalsIgnoreCase("stats")){
@@ -74,21 +76,12 @@ public class CommandSkills implements CommandExecutor{
                             String skill = skillsManager.getSkillByName(arguments[1]);
                             Integer level = skillsManager.getSkillLevel(player, skill);
                             Integer points = skillsManager.getSkillPoints(player, skill);
-                            Integer nextLevel = (skillsManager.getSkillLevel(player, skill) * 10 + 10);
-                            String header = ("§6==========-§7" + skill.toUpperCase() + "§6-==========");
-                            player.sendMessage(header);
-                            player.sendMessage("§fLevel: §6" + level);
-                            player.sendMessage("§fPoints §6" + points + "§7/§b" + nextLevel + "§f to level up.");
-                            player.sendMessage("§fMoney reward multiplier: §6" + skillsManager.getMoneyMultiplier(player, skill));
-                            player.sendMessage("§fXP reward multiplier: §6" + skillsManager.getExperienceMultiplier(player, skill));
-                            StringBuilder stringBuilder = new StringBuilder();
-                            for (int i = 0; i < header.toCharArray().length - 6; i++) {
-                                stringBuilder.append("=");
-                            }
-                            sender.sendMessage("§6" + stringBuilder.toString());
+                            player.sendMessage(formatMessage(messagesManager.getMessage("SKILLS_STATS_HEAD"), skill));
+                            player.sendMessage(formatMessage(messagesManager.getMessage("SKILLS_STATS_BODY"), skill, level, points, skillsManager.getXpToLevelUp(player, skill), skillsManager.getMaxSkillLevel(skill), skillsManager.isGiveXP(skill), skillsManager.isGiveMoney(skill), skillsManager.getExperienceMultiplier(player, skill), skillsManager.getMoneyMultiplier(player, skill)));
+                            player.sendMessage(formatMessage(messagesManager.getMessage("SKILLS_STATS_FOOT")));
                         }
                         else{
-                            player.sendMessage(pluginHeader + "§b" + arguments[1] + "§7 is not a valid skill or skill is disabled.");
+                            player.sendMessage(formatMessage(messagesManager.getMessage("INVALID_SKILL"), arguments[1]));
                         }
                     }
                     else if(arguments[0].equalsIgnoreCase("info")){
@@ -96,16 +89,12 @@ public class CommandSkills implements CommandExecutor{
                             String skill = skillsManager.getSkillByName(arguments[1]);
                             Integer level = skillsManager.getSkillLevel(player, skill);
                             Integer points = skillsManager.getSkillPoints(player, skill);
-                            player.sendMessage("§6=====-§7SKILL INFO§6-=====");
-                            player.sendMessage("§7  - §fName: §b" + skill.toUpperCase());
-                            player.sendMessage("§7  - §fLevel: §6" + level + "§7/§b" + skillsManager.getMaxSkillLevel(skill) + "§f.");
-                            player.sendMessage("§7  - §fPoints: §6" + points + "§7/§b" + skillsManager.getXpToLevelUp(player, skill) + "§f.");
-                            player.sendMessage("§7  - §fXpDrop: §b" + skillsManager.isGiveXP(skill));
-                            player.sendMessage("§7  - §fMoneyDrop: §b" + skillsManager.isGiveMoney(skill));
-                            player.sendMessage("§6=====================");
+                            player.sendMessage(formatMessage(messagesManager.getMessage("SKILLS_INFO_HEAD")));
+                            player.sendMessage(formatMessage(messagesManager.getMessage("SKILLS_INFO_BODY"), skill, level, points, skillsManager.getXpToLevelUp(player, skill), skillsManager.getMaxSkillLevel(skill), skillsManager.isGiveXP(skill), skillsManager.isGiveMoney(skill), skillsManager.getExperienceMultiplier(player, skill), skillsManager.getMoneyMultiplier(player, skill)));
+                            player.sendMessage(formatMessage(messagesManager.getMessage("SKILLS_INFO_FOOT")));
                         }
                         else{
-                            player.sendMessage(pluginHeader + "§b" + arguments[1] + "§7 is not a valid skill or skill is disabled.");
+                            player.sendMessage(formatMessage(messagesManager.getMessage("INVALID_SKILL"), arguments[1]));
                         }
                     }
                     else{
@@ -113,7 +102,7 @@ public class CommandSkills implements CommandExecutor{
                     }
                 }
                 else{
-                    sender.sendMessage("This sub-command is player only...");
+                    sender.sendMessage(formatMessage(messagesManager.getMessage("PLAYERS_ONLY")));
                 }
             }
         }
@@ -121,13 +110,38 @@ public class CommandSkills implements CommandExecutor{
     }
 
     private void sendHelpInfos(CommandSender sender){
-        sender.sendMessage("§6=====-§7MysticLevels§6-=====");
-        sender.sendMessage("§8  - §7/skills §6points §b<skill>");
-        sender.sendMessage("§8  - §7/skills §6level §b<skill>");
-        sender.sendMessage("§8  - §7/skills §6stats §b<skill>");
-        sender.sendMessage("§8  - §7/skills §6info §b<skill>");
-        sender.sendMessage("§8  - §7/skills §6list");
-        sender.sendMessage("§8  - §7/skills §6help");
-        sender.sendMessage("§6======================");
+        sender.sendMessage(formatMessage(messagesManager.getMessage("HELP_MESSAGE")));
+    }
+
+    private String formatMessage(String message, String skillName, int skillLevel, int points, int requiredPoints, int maxLevel, boolean xpGiving, boolean moneyGiving, int xpMultiplier, int moneyMultiplier){
+        String skillNamePlaceholder = "%SKILL%";
+        String skillLevelPlaceholder = "%LEVEL%";
+        String pointsPlaceholder = "%POINTS";
+        String requiredPointsPlaceholder = "%REQUIRED_POINTS%";
+        String maxLevelPlaceholder = "%MAX_LEVEL%";
+        String xpGivingPlaceholder = "%XP_GIVING_ACTIVE%";
+        String moneyGivingPlaceholder = "%MONEY_GIVING_ACTIVE";
+        String xpMultiplierPlaceholder = "%XP_MULTIPLIER%";
+        String moneyMultiplierPlaceholder = "%MONEY_MULTIPLIER%";
+        String pluginHeadPlaceholder = "%PLUGIN_HEAD%";
+
+        message = message.replaceAll(skillNamePlaceholder, skillName);
+        message = message.replaceAll(skillLevelPlaceholder, "" + skillLevel);
+        message = message.replaceAll(pointsPlaceholder, "" + points);
+        message = message.replaceAll(requiredPointsPlaceholder, "" + requiredPoints);
+        message = message.replaceAll(maxLevelPlaceholder, "" + maxLevel);
+        message = message.replaceAll(xpGivingPlaceholder, "" + xpGiving);
+        message = message.replaceAll(moneyGivingPlaceholder, "" + moneyGiving);
+        message = message.replaceAll(xpMultiplierPlaceholder, "" + xpMultiplier);
+        message = message.replaceAll(pluginHeadPlaceholder, pluginHeader);
+        return message.replaceAll(moneyMultiplierPlaceholder, "" + moneyMultiplier);
+    }
+
+    private String formatMessage(String message, String skillName){
+        return formatMessage(message, skillName, 0, 0, 0, 0, false, false, 0, 0);
+    }
+
+    private String formatMessage(String message){
+        return formatMessage(message, "");
     }
 }

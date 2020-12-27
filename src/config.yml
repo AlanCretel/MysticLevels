@@ -1,6 +1,7 @@
 SETTINGS:
 #The plugin's prefix for messages. Don't forget to leave a space at the end :)
   plugin_header: "§6[MysticLevels]: "
+  levelup_formula: "2*({LEVEL}+1)^2)"
 #Does events gives xp ? You can disable this per-skill too ;)
   give_xp: true
 #Does events gives money ? You can disable this per-skill too ;)

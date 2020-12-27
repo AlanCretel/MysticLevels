@@ -1,4 +1,4 @@
-package fr.choco70.mysticlevels.utils;
+package fr.choco70.mysticlevels.managers;
 
 import fr.choco70.mysticlevels.MysticLevels;
 import org.bukkit.configuration.file.FileConfiguration;

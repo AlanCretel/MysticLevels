@@ -2,8 +2,8 @@ package fr.choco70.mysticlevels.listeners;
 
 import fr.choco70.mysticlevels.MysticLevels;
 import fr.choco70.mysticlevels.utils.EconomyLink;
-import fr.choco70.mysticlevels.utils.PlayersManager;
-import fr.choco70.mysticlevels.utils.SkillsManager;
+import fr.choco70.mysticlevels.managers.PlayersManager;
+import fr.choco70.mysticlevels.managers.SkillsManager;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;

@@ -1,7 +1,7 @@
 package fr.choco70.mysticlevels.commands.tabCompleters;
 
 import fr.choco70.mysticlevels.MysticLevels;
-import fr.choco70.mysticlevels.utils.SkillsManager;
+import fr.choco70.mysticlevels.managers.SkillsManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

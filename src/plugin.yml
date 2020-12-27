@@ -1,7 +1,7 @@
 name: MysticLevels
 author: Choco70
 main: fr.choco70.mysticlevels.MysticLevels
-version: 1.1.2
+version: 1.1.3
 api-version: "1.14"
 softdepend: [Vault, PlaceholderAPI]
 commands:
